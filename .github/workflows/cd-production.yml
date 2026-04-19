@@ -1,0 +1,203 @@
+name: CD — Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: cd-production
+  cancel-in-progress: false   # Never cancel in-flight production deployments
+
+env:
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+  BACKEND_IMAGE: privora-backend
+  FRONTEND_IMAGE: privora-frontend
+  ENVIRONMENT: production
+
+jobs:
+  # ─── CI Gate: Run full test suite before production ───────────────────────
+  ci-check:
+    name: Run CI checks
+    uses: ./.github/workflows/ci.yml
+
+  # ─── Build & Push Backend Image ───────────────────────────────────────────
+  build-backend:
+    name: Build & Push Backend Image
+    runs-on: ubuntu-latest
+    needs: ci-check
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tag }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set image tag
+        id: meta
+        run: |
+          SHA=$(echo ${{ github.sha }} | cut -c1-8)
+          TAG="v-${SHA}"
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "Image tag: ${TAG}"
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.ECR_REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ steps.meta.outputs.tag }}
+            ${{ env.ECR_REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest
+          cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest
+          cache-to: type=inline
+
+  # ─── Build & Push Frontend Image ─────────────────────────────────────────
+  build-frontend:
+    name: Build & Push Frontend Image
+    runs-on: ubuntu-latest
+    needs: ci-check
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tag }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set image tag
+        id: meta
+        run: |
+          SHA=$(echo ${{ github.sha }} | cut -c1-8)
+          echo "tag=v-${SHA}" >> $GITHUB_OUTPUT
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          build-args: |
+            VITE_API_URL=
+            VITE_DEMO_MODE=false
+          tags: |
+            ${{ env.ECR_REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ steps.meta.outputs.tag }}
+            ${{ env.ECR_REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest
+          cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest
+          cache-to: type=inline
+
+  # ─── Deploy to Production EC2 ─────────────────────────────────────────────
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build-backend, build-frontend]
+    environment: production   # Requires manual approval in GitHub Environments settings
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy via SSH to production EC2
+        id: deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST_PRODUCTION }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          timeout: 180s
+          script: |
+            set -e
+            export AWS_DEFAULT_REGION=${{ secrets.AWS_REGION }}
+            BACKEND_TAG=v-$(echo ${{ github.sha }} | cut -c1-8)
+            FRONTEND_TAG=v-$(echo ${{ github.sha }} | cut -c1-8)
+
+            # Login to ECR
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+              docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+
+            # Run deployment script
+            bash /opt/privora/scripts/deploy.sh \
+              "${{ secrets.ECR_REGISTRY }}" \
+              "privora-backend" \
+              "${BACKEND_TAG}" \
+              "privora-frontend" \
+              "${FRONTEND_TAG}" \
+              "production"
+
+      - name: Health check with auto-rollback
+        run: |
+          echo "Waiting 30s for production services to stabilize..."
+          sleep 30
+
+          HEALTH_URL="http://${{ secrets.EC2_HOST_PRODUCTION }}:5000/api/v1/health"
+          PASSED=0
+
+          for i in 1 2 3 4 5 6; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${HEALTH_URL}" || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "Health check passed on attempt $i"
+              PASSED=1
+              break
+            fi
+            echo "Attempt $i failed (HTTP $STATUS) — waiting 15s..."
+            sleep 15
+          done
+
+          if [ "$PASSED" = "0" ]; then
+            echo "Production health check FAILED — triggering rollback"
+            exit 1
+          fi
+
+      - name: Rollback on health check failure
+        if: failure() && steps.deploy.conclusion == 'success'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST_PRODUCTION }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "ROLLBACK TRIGGERED — restoring previous version"
+            bash /opt/privora/scripts/rollback.sh "production"
+
+      - name: Notify Slack — Production deployed
+        if: success()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": ":white_check_mark: *Production deployed* — `${{ github.sha }}` by @${{ github.actor }}\nHealth check passed.\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        continue-on-error: true
+
+      - name: Notify Slack — Production deployment FAILED
+        if: failure()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": ":rotating_light: *Production deployment FAILED* — `${{ github.sha }}` by @${{ github.actor }}\nAutomatic rollback was triggered.\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        continue-on-error: true

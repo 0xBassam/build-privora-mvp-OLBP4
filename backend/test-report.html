@@ -1,0 +1,277 @@
+<html><head><meta charset="utf-8"/><title>Test Report</title><style type="text/css">:root {
+  --text-primary: #111;
+  --text-secondary: #4f4f4f;
+  --success: #006633;
+  --success-bright: #80ffbf;
+  --danger: #cc071e;
+  --danger-bright: #fbdfe0;
+  --warning: #995c00;
+  --warning-bright: #ffeea8;
+  --panel: #eee;
+  --border: #949494;
+  --disabled: #6b6b6b;
+}
+
+html,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+}
+body {
+  padding: 2rem 1rem;
+}
+.jesthtml-content {
+  margin: 0 auto;
+  max-width: 70rem;
+}
+header {
+  display: flex;
+  align-items: center;
+}
+#title {
+  margin: 0;
+  flex-grow: 1;
+}
+#logo {
+  height: 4rem;
+}
+#timestamp {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+#metadata-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.additional-information-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/** SUMMARY */
+#summary {
+  color: var(--text-primary);
+  display: flex;
+  font-family: monospace;
+  font-size: 1rem;
+}
+#summary > div {
+  margin-right: 0.5rem;
+  background: var(--panel);
+  padding: 1rem;
+  min-width: 15rem;
+}
+#summary > div:last-child {
+  margin-right: 0;
+}
+@media only screen and (max-width: 720px) {
+  #summary {
+    flex-direction: column;
+  }
+  #summary > div {
+    margin-right: 0;
+    margin-top: 1rem;
+  }
+  #summary > div:first-child {
+    margin-top: 0;
+  }
+}
+
+.summary-total {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.summary-passed {
+  color: var(--success);
+  border-left: 0.4rem solid var(--success);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-failed,
+.summary-obsolete-snapshots {
+  color: var(--danger);
+  border-left: 0.4rem solid var(--danger);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-pending {
+  color: var(--warning);
+  border-left: 0.4rem solid var(--warning);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-empty {
+  color: var(--disabled);
+  border-left: 0.4rem solid var(--disabled);
+  margin-bottom: 0.15rem;
+}
+
+.test-result {
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+}
+.test-result:last-child {
+  border: 0;
+}
+.test-result.passed {
+  background-color: var(--success-bright);
+  color: var(--success);
+}
+.test-result.failed {
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.test-result.pending {
+  background-color: var(--warning-bright);
+  color: var(--warning);
+}
+
+.test-info {
+  display: flex;
+  justify-content: space-between;
+}
+.test-suitename {
+  width: 20%;
+  text-align: left;
+  font-weight: bold;
+  word-break: break-word;
+}
+.test-title {
+  width: 40%;
+  text-align: left;
+  font-style: italic;
+}
+.test-status {
+  width: 20%;
+  text-align: right;
+}
+.test-duration {
+  width: 10%;
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.failureMessages {
+  padding: 0 1rem;
+  margin-top: 1rem;
+  border-top: 1px dashed var(--danger);
+}
+.failureMessages.suiteFailure {
+  border-top: none;
+}
+.failureMsg {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.suite-container {
+  margin-bottom: 1rem;
+}
+.suite-info {
+  padding: 1rem;
+  background-color: var(--panel);
+  color: var(--text-secondary);
+  border: 0.15rem solid;
+  border-color: var(--panel);
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.suite-info:hover {
+  border-color: var(--border);
+  cursor: pointer;
+}
+.suite-info .suite-path {
+  word-break: break-all;
+  flex-grow: 1;
+  font-family: monospace;
+  font-size: 1rem;
+}
+.suite-info .suite-time {
+  margin-left: 1rem;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.85rem;
+}
+.suite-info .suite-time.warn {
+  background-color: var(--danger);
+  color: #fff;
+}
+.suite-info:before {
+  content: "\2303";
+  display: inline-block;
+  margin-right: 1rem;
+  transform: rotate(180deg) translateY(0.15rem);
+}
+.suite-container[open] .suite-info:before {
+  transform: rotate(0deg) translateY(0.15rem);
+}
+
+/* CONSOLE LOGS */
+.suite-consolelog {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--panel);
+}
+.suite-consolelog-header {
+  font-weight: bold;
+}
+.suite-consolelog-item {
+  padding: 0.5rem;
+}
+.suite-consolelog-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-consolelog-item-origin {
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+.suite-consolelog-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* OBSOLETE SNAPSHOTS */
+.suite-obsolete-snapshots {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.suite-obsolete-snapshots-header {
+  font-weight: bold;
+}
+.suite-obsolete-snapshots-item {
+  padding: 0.5rem;
+}
+.suite-obsolete-snapshots-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-obsolete-snapshots-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+</style></head><body><main class="jesthtml-content"><header><h1 id="title">Test Report</h1></header><section id="metadata-container"><div id="timestamp">Started: 2026-04-12 07:00:32</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (7)</div><div class="summary-passed ">7 passed</div><div class="summary-failed  summary-empty">0 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (67)</div><div class="summary-passed ">67 passed</div><div class="summary-failed  summary-empty">0 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></section><details id="suite-1" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/home/user/Bassam/backend/tests/integration/auth.test.js</div><div class="suite-time warn">6.687s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /api/v1/health</div><div class="test-title">returns 200 healthy</div><div class="test-status">passed</div><div class="test-duration">0.056s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/request-otp</div><div class="test-title">accepts a valid email and returns 200</div><div class="test-status">passed</div><div class="test-duration">0.168s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/request-otp</div><div class="test-title">rejects an invalid email with 400</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/request-otp</div><div class="test-title">auto-creates a user account on first OTP request</div><div class="test-status">passed</div><div class="test-duration">0.117s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/verify-otp</div><div class="test-title">returns JWT tokens on correct OTP</div><div class="test-status">passed</div><div class="test-duration">0.309s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/verify-otp</div><div class="test-title">returns 401 for a wrong OTP</div><div class="test-status">passed</div><div class="test-duration">0.204s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/verify-otp</div><div class="test-title">returns 400 for missing otp field</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/admin/login</div><div class="test-title">returns tokens for valid admin credentials</div><div class="test-status">passed</div><div class="test-duration">0.299s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/admin/login</div><div class="test-title">returns 401 for wrong password</div><div class="test-status">passed</div><div class="test-duration">0.106s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/admin/login</div><div class="test-title">returns 401 when user role is "user" (not admin)</div><div class="test-status">passed</div><div class="test-duration">0.1s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/admin/login</div><div class="test-title">returns 400 for short password in request body</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/refresh</div><div class="test-title">issues a new access token for a valid refresh token</div><div class="test-status">passed</div><div class="test-duration">0.397s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/refresh</div><div class="test-title">returns 401 for a bogus refresh token</div><div class="test-status">passed</div><div class="test-duration">0.28s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/auth/refresh</div><div class="test-title">returns 400 when refreshToken field is missing</div><div class="test-status">passed</div><div class="test-duration">0.008s</div></div></div></div></details><details id="suite-2" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/home/user/Bassam/backend/tests/integration/consents.test.js</div><div class="suite-time">2.336s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /api/v1/consents/requests</div><div class="test-title">returns 401 without auth token</div><div class="test-status">passed</div><div class="test-duration">0.01s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /api/v1/consents/requests</div><div class="test-title">returns empty list when no active requests exist</div><div class="test-status">passed</div><div class="test-duration">0.036s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /api/v1/consents/requests</div><div class="test-title">lists active consent requests for user</div><div class="test-status">passed</div><div class="test-duration">0.137s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/:id/respond</div><div class="test-title">approves a consent request</div><div class="test-status">passed</div><div class="test-duration">0.119s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/:id/respond</div><div class="test-title">rejects a consent request with reason</div><div class="test-status">passed</div><div class="test-duration">0.106s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/:id/respond</div><div class="test-title">returns 400 for duplicate response</div><div class="test-status">passed</div><div class="test-duration">0.12s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/:id/respond</div><div class="test-title">allows withdrawing a previously approved consent</div><div class="test-status">passed</div><div class="test-duration">0.122s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/:id/respond</div><div class="test-title">returns 400 for invalid status value</div><div class="test-status">passed</div><div class="test-duration">0.104s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/:id/respond</div><div class="test-title">returns 401 without auth token</div><div class="test-status">passed</div><div class="test-duration">0.1s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /api/v1/consents/history</div><div class="test-title">returns 401 without auth</div><div class="test-status">passed</div><div class="test-duration">0.006s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /api/v1/consents/history</div><div class="test-title">returns the user's consent transactions</div><div class="test-status">passed</div><div class="test-duration">0.126s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/org</div><div class="test-title">creates a consent request for org_admin</div><div class="test-status">passed</div><div class="test-duration">0.104s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/org</div><div class="test-title">returns 403 for regular users</div><div class="test-status">passed</div><div class="test-duration">0.009s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">POST /api/v1/consents/org</div><div class="test-title">returns 400 when required fields are missing</div><div class="test-status">passed</div><div class="test-duration">0.102s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /api/v1/consents/org</div><div class="test-title">lists consent requests for org_admin</div><div class="test-status">passed</div><div class="test-duration">0.105s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">GET /api/v1/consents/org</div><div class="test-title">returns 403 for regular users</div><div class="test-status">passed</div><div class="test-duration">0.012s</div></div></div></div></details><details id="suite-3" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/home/user/Bassam/backend/tests/unit/otpService.test.js</div><div class="suite-time">1.814s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">OTP Service &gt; createOtp()</div><div class="test-title">returns a 6-digit numeric string</div><div class="test-status">passed</div><div class="test-duration">0.107s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">OTP Service &gt; createOtp()</div><div class="test-title">invalidates previous OTPs for the same email</div><div class="test-status">passed</div><div class="test-duration">0.193s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">OTP Service &gt; createOtp()</div><div class="test-title">stores a hash, not the plaintext OTP</div><div class="test-status">passed</div><div class="test-duration">0.096s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">OTP Service &gt; verifyOtp()</div><div class="test-title">returns valid:true for a correct OTP</div><div class="test-status">passed</div><div class="test-duration">0.183s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">OTP Service &gt; verifyOtp()</div><div class="test-title">marks OTP as used after successful verification</div><div class="test-status">passed</div><div class="test-duration">0.181s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">OTP Service &gt; verifyOtp()</div><div class="test-title">returns valid:false for a wrong OTP</div><div class="test-status">passed</div><div class="test-duration">0.19s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">OTP Service &gt; verifyOtp()</div><div class="test-title">returns valid:false when no active OTP exists</div><div class="test-status">passed</div><div class="test-duration">0.003s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">OTP Service &gt; verifyOtp()</div><div class="test-title">rejects an already-used OTP</div><div class="test-status">passed</div><div class="test-duration">0.184s</div></div></div></div></details><details id="suite-4" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/home/user/Bassam/backend/tests/unit/tokenService.test.js</div><div class="suite-time">1.516s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Token Service &gt; generateAccessToken()</div><div class="test-title">returns a signed JWT string</div><div class="test-status">passed</div><div class="test-duration">0.071s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Token Service &gt; generateAccessToken()</div><div class="test-title">embeds userId, email, and role in the payload</div><div class="test-status">passed</div><div class="test-duration">0.004s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Token Service &gt; generateRefreshToken()</div><div class="test-title">returns a hex string and persists a hashed record</div><div class="test-status">passed</div><div class="test-duration">0.115s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Token Service &gt; validateRefreshToken()</div><div class="test-title">returns the token record for a valid token</div><div class="test-status">passed</div><div class="test-duration">0.188s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Token Service &gt; validateRefreshToken()</div><div class="test-title">returns null for a random token not in DB</div><div class="test-status">passed</div><div class="test-duration">0.181s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Token Service &gt; revokeRefreshToken()</div><div class="test-title">marks the token record as revoked</div><div class="test-status">passed</div><div class="test-duration">0.212s</div></div></div></div></details><details id="suite-5" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/home/user/Bassam/backend/tests/unit/encryption.test.js</div><div class="suite-time">0.287s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encryption Utils &gt; encrypt()</div><div class="test-title">returns a non-empty ciphertext string</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encryption Utils &gt; encrypt()</div><div class="test-title">produces different ciphertext each call (IV randomness)</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encryption Utils &gt; encrypt()</div><div class="test-title">returns null/undefined input unchanged</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encryption Utils &gt; decrypt()</div><div class="test-title">round-trips a plaintext string</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encryption Utils &gt; decrypt()</div><div class="test-title">round-trips an email address</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encryption Utils &gt; decrypt()</div><div class="test-title">returns null for garbage input</div><div class="test-status">passed</div><div class="test-duration">0.005s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Encryption Utils &gt; decrypt()</div><div class="test-title">returns null/undefined unchanged</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div></div></details><details id="suite-6" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/home/user/Bassam/backend/tests/unit/rbac.test.js</div><div class="suite-time">0.133s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">RBAC Middleware &gt; rbac()</div><div class="test-title">calls next() when user has an allowed role</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RBAC Middleware &gt; rbac()</div><div class="test-title">returns 403 when role is not in allowed list</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RBAC Middleware &gt; rbac()</div><div class="test-title">returns 403 when req.user is missing</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RBAC Middleware &gt; rbac()</div><div class="test-title">allows super_admin for any role list</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RBAC Middleware &gt; requireSameOrg()</div><div class="test-title">calls next() when org IDs match</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RBAC Middleware &gt; requireSameOrg()</div><div class="test-title">returns 403 when org IDs do not match</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">RBAC Middleware &gt; requireSameOrg()</div><div class="test-title">bypasses org check for super_admin</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div></div></details><details id="suite-7" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">/home/user/Bassam/backend/tests/unit/response.test.js</div><div class="suite-time">0.136s</div></summary><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; success()</div><div class="test-title">sends 200 with success:true</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; success()</div><div class="test-title">includes a timestamp</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; created()</div><div class="test-title">sends 201</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; error()</div><div class="test-title">sends 500 with success:false</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; error()</div><div class="test-title">includes errors array when provided</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; unauthorized()</div><div class="test-title">sends 401</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; forbidden()</div><div class="test-title">sends 403</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; notFound()</div><div class="test-title">sends 404</div><div class="test-status">passed</div><div class="test-duration">0.001s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Response Utils &gt; badRequest()</div><div class="test-title">sends 400</div><div class="test-status">passed</div><div class="test-duration"> </div></div></div></div></details></main></body></html>

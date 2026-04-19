@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: Arial, sans-serif; font-size: 12pt; color: #1a1a1a; margin: 0; padding: 0; }
+  .page { max-width: 800px; margin: 0 auto; padding: 60px 70px; }
+  h1.cover-title { font-size: 32pt; color: #1e3a5f; margin-bottom: 8px; }
+  h1.cover-title span { color: #2563eb; }
+  .cover-sub { font-size: 14pt; color: #555; margin-bottom: 4px; }
+  .cover-date { font-size: 11pt; color: #888; margin-top: 20px; }
+  .cover-divider { border: none; border-top: 3px solid #2563eb; margin: 30px 0; }
+  h2 { font-size: 16pt; color: #1e3a5f; border-bottom: 2px solid #2563eb; padding-bottom: 6px; margin-top: 40px; page-break-before: always; }
+  h2:first-of-type { page-break-before: avoid; }
+  h3 { font-size: 13pt; color: #1e3a5f; margin-top: 24px; margin-bottom: 6px; }
+  p { line-height: 1.7; margin: 8px 0; }
+  ul, ol { line-height: 1.8; margin: 8px 0 8px 24px; }
+  li { margin-bottom: 4px; }
+  code, pre { font-family: 'Courier New', monospace; font-size: 10pt; background: #f4f6f9; border: 1px solid #dde1e7; border-radius: 4px; }
+  pre { padding: 14px 18px; margin: 12px 0; white-space: pre-wrap; word-break: break-word; }
+  code { padding: 1px 5px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 11pt; }
+  th { background: #1e3a5f; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .alert { background: #fff3cd; border-left: 4px solid #f59e0b; padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .alert-danger { background: #fee2e2; border-left-color: #ef4444; }
+  .alert-success { background: #dcfce7; border-left-color: #22c55e; }
+  .alert-info { background: #dbeafe; border-left-color: #3b82f6; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 10pt; font-weight: bold; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-red { background: #fee2e2; color: #991b1b; }
+  .badge-yellow { background: #fef9c3; color: #854d0e; }
+  .toc { background: #f8fafc; border: 1px solid #e2e8f0; padding: 24px 32px; border-radius: 8px; margin: 32px 0; }
+  .toc h3 { margin-top: 0; color: #1e3a5f; }
+  .toc ol { margin: 0; }
+  .toc li { margin-bottom: 6px; color: #2563eb; }
+  .cover-block { background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%); color: white; padding: 60px 70px; }
+  .cover-block h1 { font-size: 34pt; margin: 0 0 10px 0; color: white; }
+  .cover-block .sub { font-size: 14pt; opacity: 0.85; }
+  .cover-block .meta { margin-top: 40px; font-size: 11pt; opacity: 0.7; }
+  .section-label { font-size: 10pt; color: #2563eb; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .gap-item { padding: 10px 14px; border-left: 3px solid #ef4444; background: #fff5f5; margin: 8px 0; border-radius: 0 6px 6px 0; }
+  .gap-item strong { color: #b91c1c; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover-block">
+  <h1>Privora</h1>
+  <div class="sub">Technical Handover Document</div>
+  <div class="meta">
+    Prepared for: Bassam — Founder, Privora<br>
+    Document Type: Full Technical Handover<br>
+    Date: April 2026<br>
+    Classification: Confidential
+  </div>
+</div>
+
+<div class="page">
+
+<!-- TOC -->
+<div class="toc">
+  <h3>Table of Contents</h3>
+  <ol>
+    <li>Full System Walkthrough</li>
+    <li>What Has Been Built</li>
+    <li>Deployment &amp; Infrastructure</li>
+    <li>Database &amp; Data Handling</li>
+    <li>Security Architecture</li>
+    <li>Integration Capability</li>
+    <li>DevSecOps &amp; CI/CD</li>
+    <li>WAF &amp; Infrastructure Security</li>
+    <li>Mobile Readiness</li>
+    <li>Scaling &amp; Future Architecture</li>
+    <li>Team &amp; Future Development</li>
+    <li>Documentation &amp; Ownership</li>
+    <li>Action Items Before Production</li>
+  </ol>
+</div>
+
+<!-- SECTION 1 -->
+<h2>1. Full System Walkthrough</h2>
+
+<h3>Architecture Overview</h3>
+<p>Privora is a three-tier web application:</p>
+<pre>Browser (React SPA)
+      ↓  HTTPS / REST API
+Express.js API Server (Node.js) — hosted on Railway
+      ↓  Mongoose ODM
+MongoDB Atlas (Cloud Database)</pre>
+
+<table>
+  <tr><th>Layer</th><th>Technology</th><th>Hosting</th></tr>
+  <tr><td>Frontend</td><td>React 18 + TypeScript + Vite + Tailwind CSS</td><td>GitHub Pages (demo) / Vercel (production)</td></tr>
+  <tr><td>Backend</td><td>Node.js + Express.js</td><td>Railway</td></tr>
+  <tr><td>Database</td><td>MongoDB Atlas</td><td>MongoDB Cloud</td></tr>
+</table>
+
+<h3>End-to-End Data Flow — Consent Example</h3>
+<ol>
+  <li>Org admin creates a consent request via the dashboard form.</li>
+  <li>Frontend sends POST /api/consents with title, dataTypes, purpose, legalBasis, retentionPeriod.</li>
+  <li>Backend validates the JWT token, confirms the user is org_admin, saves to the database.</li>
+  <li>User logs into their portal, fetches GET /api/consents/requests.</li>
+  <li>User approves — POST /api/consents/:id/respond with status: "approved".</li>
+  <li>Backend creates a ConsentResponse record and writes an immutable AuditLog entry.</li>
+  <li>Org admin dashboard refreshes and shows updated approval rate.</li>
+</ol>
+
+<h3>Module Interaction Map</h3>
+<pre>Consent Management
+  └── triggers → Data Sharing Gateway (consent required before share)
+  └── triggers → Audit Log (every action logged)
+  └── triggers → Privacy Notice (notice version recorded)
+
+Data Sharing Gateway
+  └── requires → Consent approval
+  └── writes   → Audit Log (every transfer logged)
+  └── checks   → Purpose Registry (purpose validation)
+
+DSAR Module
+  └── references → Consent records
+  └── writes     → Audit Log
+  └── enforces   → 30-day SLA deadline
+
+Breach Management
+  └── writes   → Audit Log
+  └── enforces → 72-hour authority notification (PDPL Art. 19)
+
+Compliance Dashboard
+  └── reads all modules for aggregated KPIs and score</pre>
+
+<!-- SECTION 2 -->
+<h2>2. What Has Been Built</h2>
+
+<h3>Module Summary</h3>
+<table>
+  <tr><th>Module</th><th>Status</th><th>Key Capability</th></tr>
+  <tr><td>Authentication</td><td><span class="badge badge-green">Complete</span></td><td>OTP login, JWT tokens, RBAC</td></tr>
+  <tr><td>Consent Management</td><td><span class="badge badge-green">Complete</span></td><td>Create, approve, reject, withdraw</td></tr>
+  <tr><td>Data Sharing Gateway</td><td><span class="badge badge-green">Complete</span></td><td>Inter-org data exchange with consent gate</td></tr>
+  <tr><td>DSAR</td><td><span class="badge badge-green">Complete</span></td><td>5 request types, 30-day SLA</td></tr>
+  <tr><td>Breach Management</td><td><span class="badge badge-green">Complete</span></td><td>Incident log, 72-hour deadline tracking</td></tr>
+  <tr><td>Data Retention</td><td><span class="badge badge-green">Complete</span></td><td>Policy per data category, expiry tracking</td></tr>
+  <tr><td>Privacy Notices</td><td><span class="badge badge-green">Complete</span></td><td>Versioned notices, activation control</td></tr>
+  <tr><td>Purpose Registry</td><td><span class="badge badge-green">Complete</span></td><td>PDPL Art. 5 validation, purpose mapping</td></tr>
+  <tr><td>Audit Logs</td><td><span class="badge badge-green">Complete</span></td><td>Immutable append-only log</td></tr>
+  <tr><td>Analytics</td><td><span class="badge badge-green">Complete</span></td><td>Approval rate, response breakdown, KPIs</td></tr>
+  <tr><td>Compliance Dashboard</td><td><span class="badge badge-green">Complete</span></td><td>PDPL Score, overdue alerts</td></tr>
+  <tr><td>User Portal</td><td><span class="badge badge-green">Complete</span></td><td>WOW dashboard, activity timeline</td></tr>
+  <tr><td>Tests</td><td><span class="badge badge-green">156 passing</span></td><td>Integration tests for all backend modules</td></tr>
+</table>
+
+<h3>Key Business Rules</h3>
+<ul>
+  <li>Consent cannot be used for data sharing unless status is <code>approved</code>.</li>
+  <li>DSAR SLA is calculated from <code>createdAt</code> and flagged overdue after 30 days.</li>
+  <li>Breach authority deadline is 72 hours from <code>discoveredAt</code>.</li>
+  <li>Consent withdrawal sets status to <code>withdrawn</code> and blocks future data sharing under that consent.</li>
+  <li>All audit log entries are append-only — no update or delete routes exist.</li>
+  <li>Organization data is scoped by <code>organizationId</code> on every query.</li>
+</ul>
+
+<h3>Current Limitations</h3>
+<div class="alert">
+  <strong>Email Delivery:</strong> OTP is generated but email delivery requires an SMTP provider (SendGrid / AWS SES) to be configured. In demo mode, OTP is returned in the API response.
+</div>
+<div class="alert">
+  <strong>AES-256 Encryption:</strong> MongoDB Atlas provides encryption at rest on paid tiers (M10+). There is no explicit application-level field encryption in the current code. See Section 5 for full detail.
+</div>
+<div class="alert">
+  <strong>File Transfer:</strong> Data sharing is metadata-based — no actual file upload or binary transfer system exists yet.
+</div>
+<div class="alert">
+  <strong>Background Jobs:</strong> Expiry checks and SLA calculations happen at query time, not via a scheduler. This is fine at low scale.
+</div>
+
+<!-- SECTION 3 -->
+<h2>3. Deployment &amp; Infrastructure</h2>
+
+<h3>Current Setup</h3>
+<table>
+  <tr><th>Component</th><th>Service</th><th>Notes</th></tr>
+  <tr><td>Frontend</td><td>GitHub Pages</td><td>Demo only — use Vercel for production</td></tr>
+  <tr><td>Backend API</td><td>Railway</td><td>Auto-deploys on GitHub push</td></tr>
+  <tr><td>Database</td><td>MongoDB Atlas</td><td>Connection string stored in Railway env vars</td></tr>
+</table>
+
+<h3>Required Environment Variables</h3>
+<pre>--- Backend (Railway) ---
+MONGODB_URI        = mongodb+srv://...
+JWT_SECRET         = &lt;strong random string, 64+ chars&gt;
+JWT_REFRESH_SECRET = &lt;strong random string, 64+ chars&gt;
+OTP_SECRET         = &lt;strong random string&gt;
+CLIENT_URL         = https://your-frontend-domain.com
+NODE_ENV           = production
+PORT               = 3000
+
+--- Frontend (build time) ---
+VITE_API_URL       = https://your-backend.railway.app/api
+VITE_DEMO_MODE     = false</pre>
+
+<h3>Step-by-Step Production Deployment</h3>
+<ol>
+  <li><strong>MongoDB Atlas:</strong> Create a cluster, whitelist Railway's IP address, copy the connection string.</li>
+  <li><strong>Railway:</strong> Connect your GitHub repo to Railway. Add all environment variables in the Railway dashboard. Railway auto-deploys on every push to main.</li>
+  <li><strong>Frontend:</strong> Set VITE_API_URL to your Railway backend URL. Run <code>npm run build</code>. Deploy the <code>dist</code> folder to Vercel or Netlify.</li>
+  <li><strong>CORS:</strong> Update the allowed origins in the backend to include your production frontend domain.</li>
+  <li><strong>Test:</strong> Register an org, create a consent request, respond as a user, verify audit log entry.</li>
+</ol>
+
+<!-- SECTION 4 -->
+<h2>4. Database &amp; Data Handling</h2>
+
+<h3>Collections (Tables)</h3>
+<table>
+  <tr><th>Collection</th><th>Key Fields</th></tr>
+  <tr><td>users</td><td>_id, name, email, role, organizationId, otp, otpExpiry, refreshToken</td></tr>
+  <tr><td>organizations</td><td>_id, name, logoUrl, contactEmail, isActive</td></tr>
+  <tr><td>consent_requests</td><td>organizationId, title, dataTypes[], purpose, legalBasis, retentionPeriod, expiresAt, isActive</td></tr>
+  <tr><td>consent_responses</td><td>consentRequestId, userId, status, reason, respondedAt</td></tr>
+  <tr><td>data_sharing_requests</td><td>organizationId, requestingOrgId, targetUserId, dataTypes[], status</td></tr>
+  <tr><td>data_sharing_transactions</td><td>requestId, organizationId, userId, dataTypes[], action</td></tr>
+  <tr><td>dsar_requests</td><td>userId, organizationId, requestType, status, slaDeadline, isOverdue</td></tr>
+  <tr><td>breach_incidents</td><td>organizationId, severity, status, discoveredAt, timeline[], notifiedAuthority, authorityDeadline, isAuthorityOverdue</td></tr>
+  <tr><td>retention_policies</td><td>organizationId, dataCategory, retentionPeriodDays, action, legalBasis</td></tr>
+  <tr><td>privacy_notices</td><td>organizationId, title, content, version, isActive</td></tr>
+  <tr><td>processing_purposes</td><td>organizationId, name, legalBasis, dataTypes[], pdplArticle, isActive</td></tr>
+  <tr><td>audit_logs</td><td>userId, organizationId, action, resource, resourceId, metadata, ipAddress, createdAt</td></tr>
+</table>
+
+<h3>Data Isolation</h3>
+<p>Every database query includes an <code>organizationId</code> filter. Org admins can only see their organization's data. Users can only see records targeting their userId. This is enforced at the controller (code) level on every request.</p>
+
+<h3>Backup Strategy</h3>
+<p><strong>Recommended (production):</strong> MongoDB Atlas M10+ with continuous backup (point-in-time recovery).</p>
+<p><strong>Manual backup command:</strong></p>
+<pre>mongodump --uri="mongodb+srv://..." --out=./backup-YYYY-MM-DD</pre>
+<p><strong>Restore command:</strong></p>
+<pre>mongorestore --uri="mongodb+srv://..." ./backup-YYYY-MM-DD</pre>
+
+<!-- SECTION 5 -->
+<h2>5. Security Architecture</h2>
+
+<h3>Authentication Flow</h3>
+<ol>
+  <li>User submits their email address.</li>
+  <li>Backend generates a 6-digit OTP, stores a hashed version + expiry on the user record, sends OTP to email.</li>
+  <li>User submits the OTP code.</li>
+  <li>Backend verifies hash and expiry, issues a JWT access token (15 min) and refresh token (7 days).</li>
+  <li>Frontend stores the access token in memory and refresh token in localStorage.</li>
+  <li>Every API call includes: <code>Authorization: Bearer &lt;accessToken&gt;</code></li>
+  <li>On 401 response, frontend automatically uses the refresh token to get a new access token.</li>
+</ol>
+
+<h3>RBAC Permissions</h3>
+<table>
+  <tr><th>Action</th><th>user</th><th>org_admin</th></tr>
+  <tr><td>View own consent requests</td><td>✓</td><td>✓</td></tr>
+  <tr><td>Approve / reject / withdraw consent</td><td>✓</td><td>✗</td></tr>
+  <tr><td>Create consent requests</td><td>✗</td><td>✓</td></tr>
+  <tr><td>View org analytics</td><td>✗</td><td>✓</td></tr>
+  <tr><td>Process DSAR requests</td><td>✗</td><td>✓</td></tr>
+  <tr><td>Log breach incidents</td><td>✗</td><td>✓</td></tr>
+  <tr><td>Manage retention policies</td><td>✗</td><td>✓</td></tr>
+  <tr><td>View all org audit logs</td><td>✗</td><td>✓</td></tr>
+</table>
+
+<h3>AES-256 Encryption — Honest Assessment</h3>
+<div class="alert alert-info">
+  <strong>In Transit:</strong> All traffic uses HTTPS (TLS 1.2/1.3). Enforced automatically by Railway and GitHub Pages. ✓
+</div>
+<div class="alert alert-info">
+  <strong>At Rest (Atlas level):</strong> MongoDB Atlas M10+ clusters encrypt all data at rest with AES-256 by default. The free tier (M0) does not guarantee this. Use M10+ for production. ✓ (with correct tier)
+</div>
+<div class="alert alert-danger">
+  <strong>At Application Level:</strong> There is no explicit field-level encryption in the current codebase. Personal data fields are stored in plaintext in MongoDB, protected by access controls and Atlas-level encryption. If enterprise clients require field-level encryption, implement MongoDB CSFLE (Client-Side Field Level Encryption).
+</div>
+
+<h3>API Security Measures in Place</h3>
+<ul>
+  <li>Rate limiting on authentication endpoints</li>
+  <li>CORS restricted to the frontend domain</li>
+  <li>Input validation on all POST/PUT routes</li>
+  <li>JWT verification middleware on all protected routes</li>
+  <li>Organization scoping on every data query</li>
+</ul>
+
+<!-- SECTION 6 -->
+<h2>6. Integration Capability</h2>
+
+<h3>API Structure</h3>
+<p>All endpoints are RESTful JSON under the <code>/api</code> prefix. Standard response format:</p>
+<pre>Success: { "success": true,  "data": { ... } }
+Error:   { "success": false, "message": "Description" }</pre>
+
+<h3>Key Endpoints Summary</h3>
+<table>
+  <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+  <tr><td>POST</td><td>/api/auth/send-otp</td><td>Request OTP</td></tr>
+  <tr><td>POST</td><td>/api/auth/verify-otp</td><td>Verify OTP, receive tokens</td></tr>
+  <tr><td>POST</td><td>/api/auth/refresh</td><td>Refresh access token</td></tr>
+  <tr><td>GET</td><td>/api/consents/requests</td><td>User's pending consent requests</td></tr>
+  <tr><td>POST</td><td>/api/consents</td><td>Create consent request (org_admin)</td></tr>
+  <tr><td>POST</td><td>/api/consents/:id/respond</td><td>User responds (approve/reject)</td></tr>
+  <tr><td>POST</td><td>/api/data-sharing/requests</td><td>Create data sharing request</td></tr>
+  <tr><td>POST</td><td>/api/data-sharing/requests/:id/respond</td><td>User approves/rejects share</td></tr>
+  <tr><td>GET/POST</td><td>/api/dsar/requests</td><td>Submit / list DSAR requests</td></tr>
+  <tr><td>GET/POST</td><td>/api/breaches</td><td>Breach management</td></tr>
+  <tr><td>GET</td><td>/api/analytics</td><td>Org compliance analytics</td></tr>
+  <tr><td>GET</td><td>/api/audit-logs</td><td>Audit log viewer</td></tr>
+</table>
+
+<h3>How External Systems Connect</h3>
+<ol>
+  <li>Register an organization and admin account via the auth flow.</li>
+  <li>Obtain a JWT token via OTP verification.</li>
+  <li>Pass the token in every request: <code>Authorization: Bearer &lt;token&gt;</code></li>
+  <li>Call any API endpoint in JSON.</li>
+</ol>
+
+<h3>Future Integration Possibilities</h3>
+<table>
+  <tr><th>Integration</th><th>What's Needed</th></tr>
+  <tr><td>SDAIA Breach Notification</td><td>Add outbound POST call when breach is reported to authority</td></tr>
+  <tr><td>National ID Verification (Absher/Nafath)</td><td>Add identity check step during user registration</td></tr>
+  <tr><td>HR Systems</td><td>Add webhook support to trigger events in third-party systems</td></tr>
+  <tr><td>Mobile Apps</td><td>No backend changes needed — API is already mobile-ready</td></tr>
+</table>
+
+<!-- SECTION 7 -->
+<h2>7. DevSecOps &amp; CI/CD</h2>
+
+<h3>Current State</h3>
+<p>There is no automated CI/CD pipeline in place. Deployment is currently manual:</p>
+<ul>
+  <li><strong>Backend:</strong> Push to GitHub → Railway auto-deploys automatically.</li>
+  <li><strong>Frontend:</strong> Run <code>npm run build</code> locally → run <code>npx gh-pages -d dist</code>.</li>
+</ul>
+
+<h3>Recommended GitHub Actions Pipeline</h3>
+<pre>On push to main branch:
+  1. Install dependencies (npm ci)
+  2. Run backend tests (npm test) — must all pass
+  3. TypeScript check (tsc --noEmit)
+  4. Build frontend (npm run build)
+  5. Deploy frontend to Vercel via Vercel CLI
+  (Railway handles backend deployment automatically)</pre>
+
+<h3>Security in the Pipeline</h3>
+<table>
+  <tr><th>Check</th><th>Tool</th><th>Status</th></tr>
+  <tr><td>Dependency vulnerabilities</td><td>npm audit</td><td><span class="badge badge-yellow">Add to pipeline</span></td></tr>
+  <tr><td>Secret scanning</td><td>GitHub built-in</td><td><span class="badge badge-yellow">Enable on repo</span></td></tr>
+  <tr><td>Static code analysis (SAST)</td><td>Semgrep / Snyk</td><td><span class="badge badge-yellow">Add to pipeline</span></td></tr>
+  <tr><td>Integration tests</td><td>Jest (156 tests)</td><td><span class="badge badge-green">Complete</span></td></tr>
+  <tr><td>Dynamic testing (DAST)</td><td>OWASP ZAP</td><td><span class="badge badge-red">Not yet</span></td></tr>
+</table>
+
+<!-- SECTION 8 -->
+<h2>8. WAF &amp; Infrastructure Security</h2>
+
+<h3>Recommended Setup — Cloudflare</h3>
+<p>Place Cloudflare in front of the entire system. Point your custom domain to Railway through Cloudflare DNS (enable proxy / orange cloud). This provides:</p>
+<ul>
+  <li>DDoS protection</li>
+  <li>Web Application Firewall (blocks SQLi, XSS, path traversal)</li>
+  <li>Rate limiting at the network edge</li>
+  <li>SSL termination</li>
+  <li>Bot detection and challenge pages</li>
+  <li>Real-time traffic analytics</li>
+</ul>
+
+<h3>Application-Level Security Actions</h3>
+<table>
+  <tr><th>Risk</th><th>Mitigation</th><th>Status</th></tr>
+  <tr><td>NoSQL Injection</td><td>Add express-mongo-sanitize middleware</td><td><span class="badge badge-red">Must add</span></td></tr>
+  <tr><td>XSS</td><td>React JSX escapes output by default. No dangerouslySetInnerHTML used.</td><td><span class="badge badge-green">Protected</span></td></tr>
+  <tr><td>API Rate Abuse</td><td>Apply express-rate-limit globally (currently only on auth)</td><td><span class="badge badge-yellow">Extend</span></td></tr>
+  <tr><td>CORS Misconfiguration</td><td>Restrict to exact production domain only</td><td><span class="badge badge-green">In place</span></td></tr>
+  <tr><td>Insecure HTTP Headers</td><td>Add helmet middleware</td><td><span class="badge badge-yellow">Verify</span></td></tr>
+  <tr><td>HTTP Parameter Pollution</td><td>Add hpp middleware</td><td><span class="badge badge-yellow">Add</span></td></tr>
+</table>
+
+<!-- SECTION 9 -->
+<h2>9. Mobile Readiness</h2>
+
+<p>The backend is fully ready for mobile app integration today. It is a stateless REST API returning JSON — any iOS (Swift), Android (Kotlin), or React Native app can use the same endpoints with no backend changes required.</p>
+
+<h3>Recommended Additions Before Mobile Launch</h3>
+<table>
+  <tr><th>Feature</th><th>What's Needed</th></tr>
+  <tr><td>Push Notifications</td><td>Add Firebase Cloud Messaging (FCM). Store device token on user document. Trigger on new consent requests, DSAR updates, breach alerts.</td></tr>
+  <tr><td>Biometric Auth</td><td>Handled client-side — device biometric unlocks the stored JWT. No backend changes.</td></tr>
+  <tr><td>API Versioning</td><td>Introduce /api/v1/ prefix now to avoid breaking changes later.</td></tr>
+  <tr><td>Token Storage</td><td>Mobile apps must use iOS Keychain / Android Keystore — not localStorage.</td></tr>
+</table>
+
+<!-- SECTION 10 -->
+<h2>10. Scaling &amp; Future Architecture</h2>
+
+<h3>Capacity Estimate</h3>
+<table>
+  <tr><th>Scale</th><th>What's Needed</th></tr>
+  <tr><td>0–100 organizations</td><td>Current setup — no changes required</td></tr>
+  <tr><td>100–500 organizations</td><td>Redis caching, DB indexes, Railway scale-up</td></tr>
+  <tr><td>500+ / Enterprise</td><td>Horizontal scaling, background jobs, API gateway</td></tr>
+  <tr><td>Government level</td><td>AWS/Azure KSA region (data residency), isolated DB per client</td></tr>
+</table>
+
+<h3>Key Additions at Scale</h3>
+<ul>
+  <li><strong>Redis caching</strong> — cache analytics and consent lists with 60-second TTL.</li>
+  <li><strong>Background job processor</strong> — Bull (Redis-backed) for async tasks: OTP emails, SLA checks, retention expiry runs.</li>
+  <li><strong>Database indexing</strong> — add compound indexes on (organizationId, createdAt) for all main collections.</li>
+  <li><strong>API Gateway</strong> — Kong or AWS API Gateway for auth offloading, analytics, and rate limiting at scale.</li>
+  <li><strong>Data residency</strong> — migrate to AWS Riyadh or Azure UAE North for PDPL data localization compliance.</li>
+</ul>
+
+<!-- SECTION 11 -->
+<h2>11. Team &amp; Future Development</h2>
+
+<h3>Recommended Team by Phase</h3>
+<table>
+  <tr><th>Phase</th><th>Clients</th><th>Team Needed</th></tr>
+  <tr><td>Phase 1</td><td>0–10</td><td>1 Senior Full-Stack Developer + Founder</td></tr>
+  <tr><td>Phase 2</td><td>10–50</td><td>Backend Eng + Frontend Eng + Part-time DevOps + Part-time Security</td></tr>
+  <tr><td>Phase 3</td><td>50+</td><td>Add QA Engineer + Data Engineer + Solutions Engineer</td></tr>
+</table>
+
+<h3>Immediate Priorities Before First Client</h3>
+<ol>
+  <li>Configure email delivery (SendGrid or AWS SES) for OTP</li>
+  <li>Upgrade MongoDB Atlas to M10 tier</li>
+  <li>Add express-mongo-sanitize middleware</li>
+  <li>Set up a staging environment on Railway</li>
+  <li>Enable GitHub secret scanning</li>
+  <li>Set up uptime monitoring (BetterUptime or UptimeRobot)</li>
+  <li>Write an incident runbook (what to do if backend goes down)</li>
+</ol>
+
+<!-- SECTION 12 -->
+<h2>12. Documentation &amp; Ownership</h2>
+
+<h3>Repository Structure</h3>
+<pre>/backend
+  /src
+    /models        — Mongoose schemas (all data structures)
+    /controllers   — Business logic per module
+    /routes        — Express route definitions
+    /middleware    — Auth, RBAC, error handling
+    /tests
+      /integration — 156 integration tests
+  server.js        — Entry point
+
+/frontend
+  /src
+    /pages
+      /user        — User portal pages
+      /org         — Organization admin pages
+    /layouts       — OrgLayout, UserLayout
+    /store         — Zustand auth state
+    /lib           — API client, demo mode interceptors
+    /components    — Shared UI components</pre>
+
+<h3>Documentation Gaps to Close</h3>
+<table>
+  <tr><th>Item</th><th>Priority</th><th>Tool</th></tr>
+  <tr><td>API documentation (interactive)</td><td><span class="badge badge-red">High</span></td><td>swagger-jsdoc + swagger-ui-express → /api/docs</td></tr>
+  <tr><td>Setup / onboarding guide</td><td><span class="badge badge-red">High</span></td><td>README.md in repository</td></tr>
+  <tr><td>Admin runbook</td><td><span class="badge badge-yellow">Medium</span></td><td>Notion or Confluence</td></tr>
+  <tr><td>Data dictionary</td><td><span class="badge badge-yellow">Medium</span></td><td>Document all field meanings</td></tr>
+</table>
+
+<h3>Credentials &amp; Access</h3>
+<div class="alert alert-danger">
+  <strong>Security Rule:</strong> Never share credentials (MongoDB URI, JWT secrets, Railway tokens) over email or chat. Use a password manager such as 1Password or Bitwarden for secure sharing.
+</div>
+<ul>
+  <li><strong>GitHub:</strong> Repository at 0xBassam/Bassam — branch: claude/build-privora-mvp-OLBP4</li>
+  <li><strong>Railway:</strong> Managed through your Railway account — env vars set in the dashboard</li>
+  <li><strong>MongoDB Atlas:</strong> Managed through your Atlas account — connection string in Railway env vars only</li>
+</ul>
+
+<!-- SECTION 13 -->
+<h2>13. Action Items Before Production</h2>
+
+<div class="gap-item"><strong>1. Email Delivery</strong> — Configure SendGrid or AWS SES so OTP emails are actually delivered to users.</div>
+<div class="gap-item"><strong>2. MongoDB Atlas Tier</strong> — Upgrade to M10+ to guarantee AES-256 encryption at rest.</div>
+<div class="gap-item"><strong>3. NoSQL Injection</strong> — Add <code>express-mongo-sanitize</code> middleware to the backend.</div>
+<div class="gap-item"><strong>4. API Documentation</strong> — Add Swagger/OpenAPI docs at <code>/api/docs</code> before developer onboarding.</div>
+<div class="gap-item"><strong>5. CI/CD Pipeline</strong> — Set up GitHub Actions to automate testing and deployment.</div>
+<div class="gap-item"><strong>6. Staging Environment</strong> — Deploy a separate staging instance on Railway for pre-production testing.</div>
+<div class="gap-item"><strong>7. Monitoring &amp; Alerts</strong> — Configure uptime monitor and Railway alerts so downtime is caught immediately.</div>
+<div class="gap-item"><strong>8. Data Residency</strong> — Confirm whether enterprise clients require data hosted in a Saudi Arabia cloud region. If yes, plan AWS Riyadh / Azure UAE North migration before signing contracts.</div>
+
+<br><br>
+<div style="text-align:center; color:#888; font-size:10pt; border-top: 1px solid #e2e8f0; padding-top: 20px; margin-top: 40px;">
+  Privora — Technical Handover Document &nbsp;|&nbsp; Confidential &nbsp;|&nbsp; April 2026
+</div>
+
+</div>
+</body>
+</html>

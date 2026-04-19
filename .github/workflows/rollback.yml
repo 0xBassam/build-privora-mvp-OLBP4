@@ -1,0 +1,93 @@
+name: Rollback — Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options: [production, staging]
+      image_tag:
+        description: 'Image tag to rollback to (e.g. v-a1b2c3d4). Leave empty to restore previous saved version.'
+        required: false
+        type: string
+      reason:
+        description: 'Reason for rollback'
+        required: true
+        type: string
+
+jobs:
+  rollback:
+    name: Rollback ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine target host
+        id: host
+        run: |
+          if [ "${{ inputs.environment }}" = "production" ]; then
+            echo "host=${{ secrets.EC2_HOST_PRODUCTION }}" >> $GITHUB_OUTPUT
+          else
+            echo "host=${{ secrets.EC2_HOST_STAGING }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Execute rollback on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ steps.host.outputs.host }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          timeout: 120s
+          script: |
+            set -e
+            TAG="${{ inputs.image_tag }}"
+
+            if [ -n "$TAG" ]; then
+              echo "Rolling back to explicit tag: $TAG"
+              # Login to ECR
+              aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+                docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+
+              export ECR_REGISTRY=${{ secrets.ECR_REGISTRY }}
+              bash /opt/privora/scripts/deploy.sh \
+                "${{ secrets.ECR_REGISTRY }}" \
+                "privora-backend" "${TAG}" \
+                "privora-frontend" "${TAG}" \
+                "${{ inputs.environment }}"
+            else
+              echo "Rolling back to previous saved version"
+              bash /opt/privora/scripts/rollback.sh "${{ inputs.environment }}"
+            fi
+
+      - name: Health check after rollback
+        run: |
+          HOST="${{ steps.host.outputs.host }}"
+          sleep 20
+          for i in 1 2 3; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              "http://${HOST}:5000/api/v1/health" || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "Post-rollback health check passed"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Post-rollback health check FAILED"
+          exit 1
+
+      - name: Notify Slack — Rollback executed
+        if: always()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": ":rewind: *Manual Rollback* on `${{ inputs.environment }}` by @${{ github.actor }}\nReason: ${{ inputs.reason }}\nTag: ${{ inputs.image_tag || 'previous' }}\nStatus: ${{ job.status }}\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        continue-on-error: true
