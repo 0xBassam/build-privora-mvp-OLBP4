@@ -1,0 +1,36 @@
+name: Diagnostic - RiseLoops Actions Check
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  plain:
+    name: Plain job (no special permissions)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "plain job ran"
+
+  with-pages-scopes:
+    name: Job requesting pages + id-token permissions
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - run: echo "pages-scoped job ran"
+
+  with-pages-env:
+    name: Job targeting github-pages environment
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - run: echo "github-pages environment job ran"
