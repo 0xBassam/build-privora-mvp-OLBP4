@@ -50,22 +50,30 @@ and is published to GitHub Pages by
 `.github/workflows/deploy-riseloops-pages.yml`, which runs automatically on
 every push to this branch that touches `riseloops-landing/`.
 
-Because this is a project page (served from
-`https://<owner>.github.io/<repo>/` rather than a custom domain), the build
-sets `basePath`/`assetPrefix` to `/build-privora-mvp-OLBP4` whenever the
-`GITHUB_PAGES=true` environment variable is set (the workflow sets this
-automatically). Building locally with plain `npm run build` does **not** set
-this and serves from `/`, which is what you want for local dev/testing.
+The site is served from the custom domain **riseloops.sa**, which GitHub
+Pages serves from the domain root (not a `/<repo>/` subpath), so no
+`basePath`/`assetPrefix` is configured — the export is root-relative.
+`public/CNAME` (containing `riseloops.sa`) is copied into the export output
+by Next.js and picked up by `actions/deploy-pages` to configure the custom
+domain automatically on deploy.
 
-To build the exact artifact the workflow publishes:
+The static site is emitted to `riseloops-landing/out/` by `npm run build`.
 
-```bash
-GITHUB_PAGES=true npm run build
-```
+Manual steps required in the GitHub repository/DNS settings (not something a
+workflow file can do on its own):
 
-The static site is emitted to `riseloops-landing/out/`.
+1. **Settings → Pages → Source**: **GitHub Actions**.
+2. **DNS for riseloops.sa** (at your domain registrar): add `A` records for
+   the apex domain pointing to GitHub Pages' IPs —
+   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
+   `185.199.111.153` (optionally matching `AAAA` records for IPv6:
+   `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`,
+   `2606:50c0:8003::153`). If you also want `www.riseloops.sa` to work, add a
+   `CNAME` record for `www` pointing to `<owner>.github.io`.
+3. Once DNS propagates and the workflow has deployed at least once (so the
+   `CNAME` file is live), **Settings → Pages → Custom domain** should show
+   `riseloops.sa` as verified — then enable **Enforce HTTPS**.
 
-One-time manual step required in the GitHub repository settings (not
-something a workflow file can do on its own): under **Settings → Pages**,
-set **Source** to **GitHub Actions**. Once that's set, this workflow handles
-every subsequent build and deploy.
+Actions must actually be able to run jobs on this repository for any of this
+to take effect — see the repository's Settings → Actions → General if
+workflow runs are failing before a runner is even assigned.
