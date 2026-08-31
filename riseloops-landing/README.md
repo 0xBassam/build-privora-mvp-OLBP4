@@ -6,8 +6,8 @@ independent of the Privora product app under `frontend/` in this repository.
 
 ## Tech Stack
 
-- [Next.js 14](https://nextjs.org/) (App Router)
-- React 18 + TypeScript
+- [Next.js 16](https://nextjs.org/) (App Router, static export)
+- React 19 + TypeScript
 - Tailwind CSS
 - Framer Motion (scroll reveals, hero animation, architecture diagram)
 - lucide-react (icons)
@@ -42,3 +42,30 @@ npm run start
 
 This site is one page with in-page anchor navigation and does not share any
 code, dependencies, or build tooling with the Privora product app.
+
+## Deployment (GitHub Pages)
+
+This app builds as a static export (`output: 'export'` in `next.config.mjs`)
+and is published to GitHub Pages by
+`.github/workflows/deploy-riseloops-pages.yml`, which runs automatically on
+every push to this branch that touches `riseloops-landing/`.
+
+Because this is a project page (served from
+`https://<owner>.github.io/<repo>/` rather than a custom domain), the build
+sets `basePath`/`assetPrefix` to `/build-privora-mvp-OLBP4` whenever the
+`GITHUB_PAGES=true` environment variable is set (the workflow sets this
+automatically). Building locally with plain `npm run build` does **not** set
+this and serves from `/`, which is what you want for local dev/testing.
+
+To build the exact artifact the workflow publishes:
+
+```bash
+GITHUB_PAGES=true npm run build
+```
+
+The static site is emitted to `riseloops-landing/out/`.
+
+One-time manual step required in the GitHub repository settings (not
+something a workflow file can do on its own): under **Settings → Pages**,
+set **Source** to **GitHub Actions**. Once that's set, this workflow handles
+every subsequent build and deploy.
