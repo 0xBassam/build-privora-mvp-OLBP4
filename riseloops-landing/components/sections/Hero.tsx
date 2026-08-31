@@ -54,8 +54,8 @@ function OrbitVisual() {
         })}
         <defs>
           <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#33e8c9" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#33e8c9" stopOpacity="0.05" />
+            <stop offset="0%" stopColor="#60bfac" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#60bfac" stopOpacity="0.05" />
           </linearGradient>
         </defs>
       </svg>
@@ -85,7 +85,7 @@ function OrbitVisual() {
             }}
           >
             <div className="-translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_14px_3px_rgba(51,232,201,0.55)]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_14px_3px_rgba(96,191,172,0.55)]" />
               <span className="whitespace-nowrap rounded-full border border-white/10 bg-ink-900/70 px-2.5 py-1 text-[11px] font-medium text-mist-300 backdrop-blur-sm">
                 {node.label}
               </span>

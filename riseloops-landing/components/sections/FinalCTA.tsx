@@ -8,7 +8,7 @@ export function FinalCTA() {
   return (
     <section id="contact" className="relative py-32 sm:py-44 overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(51,232,201,0.14),transparent_65%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(96,191,172,0.14),transparent_65%)]"
         aria-hidden
       />
       <motion.div
@@ -36,10 +36,26 @@ export function FinalCTA() {
           </p>
         </Reveal>
         <Reveal delay={0.3} className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <PrimaryButton href="#products">Explore Privora</PrimaryButton>
-          <SecondaryButton href="mailto:hello@riseloops.com">
+          <PrimaryButton href="https://privorasa.com" external>
+            Explore Privora
+          </PrimaryButton>
+          <SecondaryButton href="mailto:info@riseloops.sa">
             Contact RiseLoops
           </SecondaryButton>
+        </Reveal>
+        <Reveal delay={0.4} className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-mist-400">
+          <a
+            href="mailto:info@riseloops.sa"
+            className="hover:text-accent-300 transition-colors focus-ring"
+          >
+            info@riseloops.sa
+          </a>
+          <a
+            href="tel:+966567008085"
+            className="hover:text-accent-300 transition-colors focus-ring"
+          >
+            +966 56 700 8085
+          </a>
         </Reveal>
       </div>
     </section>

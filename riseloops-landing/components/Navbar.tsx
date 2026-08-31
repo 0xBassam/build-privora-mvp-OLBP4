@@ -51,7 +51,7 @@ export function Navbar() {
             aria-label="RiseLoops home"
           >
             <span className="relative flex h-7 w-7 items-center justify-center rounded-lg border border-accent-400/40 bg-accent-400/10">
-              <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_10px_2px_rgba(51,232,201,0.7)]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_10px_2px_rgba(96,191,172,0.7)]" />
             </span>
             RiseLoops
           </Link>
@@ -78,7 +78,7 @@ export function Navbar() {
             </a>
             <a
               href="#products"
-              className="inline-flex items-center rounded-full bg-accent-400 px-5 py-2.5 text-sm font-semibold text-ink-950 transition-all duration-300 hover:bg-accent-300 hover:shadow-[0_0_24px_-4px_rgba(51,232,201,0.6)] focus-ring"
+              className="inline-flex items-center rounded-full bg-accent-400 px-5 py-2.5 text-sm font-semibold text-ink-950 transition-all duration-300 hover:bg-accent-300 hover:shadow-[0_0_24px_-4px_rgba(96,191,172,0.6)] focus-ring"
             >
               Explore Products
             </a>

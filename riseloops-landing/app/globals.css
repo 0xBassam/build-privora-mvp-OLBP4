@@ -21,12 +21,12 @@ html {
 }
 
 body {
-  background-color: #05070a;
+  background-color: #181a53;
   color: #f4f6f8;
 }
 
 ::selection {
-  background: rgba(51, 232, 201, 0.28);
+  background: rgba(96, 191, 172, 0.28);
   color: #ffffff;
 }
 
@@ -35,21 +35,21 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #05070a;
+  background: #141544;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1b2230;
+  background: #3e4079;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #263043;
+  background: #494e8c;
 }
 
 .focus-ring {
   outline: none;
 }
 .focus-ring:focus-visible {
-  outline: 2px solid #33e8c9;
+  outline: 2px solid #60bfac;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -69,7 +69,7 @@ body {
   }
 
   .glow-text {
-    text-shadow: 0 0 30px rgba(51, 232, 201, 0.35);
+    text-shadow: 0 0 30px rgba(96, 191, 172, 0.35);
   }
 
   .glass-panel {
@@ -83,12 +83,12 @@ body {
   }
   .card-hover:hover {
     transform: translateY(-4px);
-    border-color: rgba(51, 232, 201, 0.35);
-    box-shadow: 0 20px 60px -20px rgba(51, 232, 201, 0.18);
+    border-color: rgba(96, 191, 172, 0.35);
+    box-shadow: 0 20px 60px -20px rgba(96, 191, 172, 0.18);
   }
 
   .shimmer-text {
-    background: linear-gradient(90deg, #f4f6f8 0%, #33e8c9 50%, #f4f6f8 100%);
+    background: linear-gradient(90deg, #f4f6f8 0%, #60bfac 50%, #f4f6f8 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;

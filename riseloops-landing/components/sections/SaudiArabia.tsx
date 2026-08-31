@@ -39,7 +39,7 @@ function NetworkVisual() {
           y1={NODES[a].y}
           x2={NODES[b].x}
           y2={NODES[b].y}
-          stroke="rgba(51,232,201,0.28)"
+          stroke="rgba(96,191,172,0.28)"
           strokeWidth={1.2}
           initial={{ pathLength: 0, opacity: 0 }}
           whileInView={{ pathLength: 1, opacity: 1 }}
@@ -53,7 +53,7 @@ function NetworkVisual() {
           cx={node.x}
           cy={node.y}
           r={i === 1 ? 6 : 4}
-          fill={i === 1 ? "#33e8c9" : "#5df3d1"}
+          fill={i === 1 ? "#60bfac" : "#7bcaba"}
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -67,7 +67,7 @@ function NetworkVisual() {
           cy={node.y}
           r={i === 1 ? 6 : 4}
           fill="none"
-          stroke="#33e8c9"
+          stroke="#60bfac"
           strokeWidth={1}
           initial={{ opacity: 0.6, scale: 1 }}
           animate={{ opacity: 0, scale: 2.4 }}

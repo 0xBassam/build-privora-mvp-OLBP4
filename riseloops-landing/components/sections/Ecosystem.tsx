@@ -24,7 +24,7 @@ export function Ecosystem() {
         <Reveal delay={0.15} className="mt-16">
           <div className="relative flex flex-col items-center">
             <div className="flex flex-col items-center gap-2 rounded-2xl border border-accent-400/30 bg-accent-400/[0.06] px-8 py-5">
-              <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_14px_3px_rgba(51,232,201,0.55)]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_14px_3px_rgba(96,191,172,0.55)]" />
               <span className="font-display text-lg font-semibold">
                 RiseLoops
               </span>
@@ -41,7 +41,7 @@ export function Ecosystem() {
                   key={x}
                   d={`M350 0 C350 24, ${x} 20, ${x} 64`}
                   fill="none"
-                  stroke="rgba(51,232,201,0.35)"
+                  stroke="rgba(96,191,172,0.35)"
                   strokeWidth={1.2}
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
@@ -64,7 +64,7 @@ export function Ecosystem() {
                   <span
                     className={`h-2 w-2 rounded-full ${
                       node.active
-                        ? "bg-accent-400 shadow-[0_0_10px_2px_rgba(51,232,201,0.55)]"
+                        ? "bg-accent-400 shadow-[0_0_10px_2px_rgba(96,191,172,0.55)]"
                         : "bg-white/20"
                     }`}
                   />

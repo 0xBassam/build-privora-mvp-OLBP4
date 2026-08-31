@@ -1,27 +1,29 @@
 const COLUMNS = [
   {
     title: "Products",
-    links: [{ label: "Privora", href: "#products" }],
+    links: [
+      { label: "Privora", href: "https://privorasa.com", external: true },
+    ],
   },
   {
     title: "Company",
     links: [
-      { label: "About", href: "#who-we-are" },
-      { label: "Contact", href: "#contact" },
+      { label: "About", href: "#who-we-are", external: false },
+      { label: "Contact", href: "#contact", external: false },
     ],
   },
   {
     title: "Technology",
     links: [
-      { label: "Security", href: "#security" },
-      { label: "Our Approach", href: "#approach" },
+      { label: "Security", href: "#security", external: false },
+      { label: "Our Approach", href: "#approach", external: false },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: "#" },
-      { label: "Terms", href: "#" },
+      { label: "Privacy", href: "#", external: false },
+      { label: "Terms", href: "#", external: false },
     ],
   },
 ];
@@ -34,13 +36,27 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2 font-display text-2xl font-semibold">
               <span className="relative flex h-7 w-7 items-center justify-center rounded-lg border border-accent-400/40 bg-accent-400/10">
-                <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_10px_2px_rgba(51,232,201,0.7)]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_10px_2px_rgba(96,191,172,0.7)]" />
               </span>
               RiseLoops
             </div>
             <p className="mt-4 max-w-xs text-sm text-mist-500 leading-relaxed">
               Intelligent technology. Secure by design.
             </p>
+            <div className="mt-5 flex flex-col gap-2">
+              <a
+                href="mailto:info@riseloops.sa"
+                className="text-sm text-mist-400 hover:text-white transition-colors focus-ring w-fit"
+              >
+                info@riseloops.sa
+              </a>
+              <a
+                href="tel:+966567008085"
+                className="text-sm text-mist-400 hover:text-white transition-colors focus-ring w-fit"
+              >
+                +966 56 700 8085
+              </a>
+            </div>
           </div>
 
           {COLUMNS.map((col) => (
@@ -53,6 +69,9 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
+                      {...(link.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                       className="text-sm text-mist-400 hover:text-white transition-colors focus-ring"
                     >
                       {link.label}

@@ -71,8 +71,10 @@ export function Products() {
 
                 <div className="mt-9 flex flex-wrap items-center gap-5">
                   <a
-                    href="#contact"
-                    className="group inline-flex items-center gap-2 rounded-full bg-accent-400 px-6 py-3 text-sm font-semibold text-ink-950 transition-all duration-300 hover:bg-accent-300 hover:shadow-[0_0_30px_-4px_rgba(51,232,201,0.6)] focus-ring"
+                    href="https://privorasa.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 rounded-full bg-accent-400 px-6 py-3 text-sm font-semibold text-ink-950 transition-all duration-300 hover:bg-accent-300 hover:shadow-[0_0_30px_-4px_rgba(96,191,172,0.6)] focus-ring"
                   >
                     Explore Privora
                     <ArrowRight

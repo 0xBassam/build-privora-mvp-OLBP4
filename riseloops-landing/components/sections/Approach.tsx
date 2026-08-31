@@ -52,7 +52,7 @@ export function Approach() {
                   className={`h-2 w-2 rounded-full ${
                     i === 0 || i === STEPS.length - 1
                       ? "bg-white/30"
-                      : "bg-accent-400 shadow-[0_0_10px_2px_rgba(51,232,201,0.5)]"
+                      : "bg-accent-400 shadow-[0_0_10px_2px_rgba(96,191,172,0.5)]"
                   }`}
                 />
                 <span className="text-sm sm:text-base font-medium text-white">
