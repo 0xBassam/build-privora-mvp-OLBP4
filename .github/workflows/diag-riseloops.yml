@@ -2,6 +2,10 @@ name: Diagnostic - RiseLoops Actions Check
 
 on:
   workflow_dispatch: {}
+  push:
+    branches: [claude/riseloops-landing-page-u2mrir]
+    paths:
+      - '.github/workflows/diag-riseloops.yml'
 
 permissions:
   contents: read
