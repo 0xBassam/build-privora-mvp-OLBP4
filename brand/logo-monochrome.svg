@@ -1,0 +1,10 @@
+<svg style="color:#181A53" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="RiseLoops symbol">
+<rect x="40" y="34" width="40" height="172" rx="10" fill="currentColor"/>
+<rect x="30" y="18" width="52" height="76" fill="currentColor"/>
+<path d="M 54.51 31.93 A 62.00 62.00 0 1 1 70.78 134.64 L 83.80 105.41 A 30.00 30.00 0 1 0 75.93 55.71 Z" fill="currentColor"/>
+<path d="M 72 116 L 104 116 L 216 214 L 190 214 Z" fill="currentColor"/>
+<path d="M 47.50 122.00 A 56.00 56.00 0 0 1 105.72 94.85 L 100.86 122.43 A 28.00 28.00 0 0 0 71.75 136.00 Z" fill="currentColor" fill-opacity="1"/>
+<path d="M 124.00 101.50 A 56.00 56.00 0 0 1 151.15 159.72 L 123.57 154.86 A 28.00 28.00 0 0 0 110.00 125.75 Z" fill="currentColor" fill-opacity="0.85"/>
+<path d="M 144.50 178.00 A 56.00 56.00 0 0 1 86.28 205.15 L 91.14 177.57 A 28.00 28.00 0 0 0 120.25 164.00 Z" fill="currentColor" fill-opacity="0.65"/>
+<path d="M 68.00 198.50 A 56.00 56.00 0 0 1 40.85 140.28 L 68.43 145.14 A 28.00 28.00 0 0 0 82.00 174.25 Z" fill="currentColor" fill-opacity="0.85"/>
+</svg>
