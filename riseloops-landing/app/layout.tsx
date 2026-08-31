@@ -33,7 +33,14 @@ export const metadata: Metadata = {
     description:
       "RiseLoops builds secure, intelligent enterprise software products across privacy, security, governance, and digital operations.",
   },
-  metadataBase: new URL("https://riseloops.com"),
+  metadataBase: new URL("https://riseloops.sa"),
+  icons: {
+    icon: [
+      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({

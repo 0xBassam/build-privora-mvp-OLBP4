@@ -35,9 +35,12 @@ export function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-2 font-display text-2xl font-semibold">
-              <span className="relative flex h-7 w-7 items-center justify-center rounded-lg border border-accent-400/40 bg-accent-400/10">
-                <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_10px_2px_rgba(96,191,172,0.7)]" />
-              </span>
+              <img
+                src="/brand/logo-symbol-dark.svg"
+                alt=""
+                aria-hidden="true"
+                className="h-8 w-8"
+              />
               RiseLoops
             </div>
             <p className="mt-4 max-w-xs text-sm text-mist-500 leading-relaxed">

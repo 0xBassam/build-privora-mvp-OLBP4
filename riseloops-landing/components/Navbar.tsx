@@ -50,9 +50,12 @@ export function Navbar() {
             className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight focus-ring"
             aria-label="RiseLoops home"
           >
-            <span className="relative flex h-7 w-7 items-center justify-center rounded-lg border border-accent-400/40 bg-accent-400/10">
-              <span className="h-2.5 w-2.5 rounded-full bg-accent-400 shadow-[0_0_10px_2px_rgba(96,191,172,0.7)]" />
-            </span>
+            <img
+              src="/brand/logo-symbol-dark.svg"
+              alt=""
+              aria-hidden="true"
+              className="h-7 w-7"
+            />
             RiseLoops
           </Link>
 
